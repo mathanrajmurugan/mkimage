@@ -1,0 +1,56 @@
+##############################
+# SECO COMPILE HELPER SCRIPT #
+##############################
+
+BOARD=$1
+RAM=$2
+
+if [[ "$BOARD" == "c26" ]]; then
+	echo "######################"
+	echo "# Compile C26 u-boot #"
+	echo "######################"
+	make clean
+	rm iMX8QM/flash.bin
+	cd iMX8QM/
+	ln -sf ../../u-boot-seco/u-boot.bin u-boot.bin 
+	ln -sf ../../u-boot-seco/spl/u-boot-spl.bin u-boot-spl.bin
+	cd ..
+	make SOC=iMX8QM flash_spl
+
+elif [[ "$BOARD" == "c61" ]]; then
+	echo "######################"
+	echo "# Compile C61 u-boot #"
+	echo "######################"
+	make clean
+	rm iMX8M/flash.bin
+	cd iMX8M/
+	ln -sf bl31-imx8mm.bin bl31.bin
+	#ln -sf tee-imx8mm.bin tee.bin 
+	ln -sf ../../u-boot-seco/arch/arm/dts/seco-imx8mm-c61.dtb fsl-imx8mm-evk.dtb
+	ln -sf ../../u-boot-seco/u-boot.bin u-boot.bin 
+	ln -sf ../../u-boot-seco/u-boot-nodtb.bin .
+	ln -sf ../../u-boot-seco/spl/u-boot-spl.bin u-boot-spl.bin
+	cd ..
+	make SOC=iMX8MM flash_evk
+
+elif [[ "$BOARD" == "c57" ]]; then
+	echo "######################"
+	echo "# Compile C57 u-boot #"
+	echo "######################"
+	make clean
+	rm iMX8QX/flash.bin
+	cd iMX8QX/
+	if [[ "$RAM" == "2gb" ]]; then
+		ln -sf ./scfw_tcm_2gb.bin ./scfw_tcm.bin 
+	elif [[ "$RAM" == "4gb" ]]; then
+                ln -sf ./scfw_tcm_4gb.bin ./scfw_tcm.bin
+	elif [[ "$RAM" == "8gb" ]]; then
+                ln -sf ./scfw_tcm_8gb.bin ./scfw_tcm.bin
+	else
+		echo "no RAM parameter selected:"
+	fi
+	cd -
+	make SOC=iMX8QX flash
+else
+	echo "Board $Board not recognized!"
+fi
