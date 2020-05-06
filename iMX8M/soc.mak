@@ -111,7 +111,7 @@ u-boot-atf-tee.bin: u-boot.bin bl31.bin tee.bin
 clean:
 	@rm -f $(MKIMG) u-boot-atf.bin u-boot-atf-tee.bin u-boot-spl-ddr.bin u-boot.itb u-boot.its u-boot-ddr3l.itb u-boot-ddr3l.its u-boot-spl-ddr3l.bin u-boot-ddr4.itb u-boot-ddr4.its u-boot-spl-ddr4.bin u-boot-ddr4-evk.itb u-boot-ivt.itb u-boot-ddr4-evk.its $(OUTIMG)
 
-dtbs = fsl-$(PLAT)-evk.dtb
+dtbs = seco-$(PLAT)-61.dtb
 u-boot.itb: $(dtbs)
 	./$(PAD_IMAGE) bl31.bin
 	./$(PAD_IMAGE) u-boot-nodtb.bin $(dtbs)
@@ -235,7 +235,7 @@ nightly :
 	@$(WGET) -q $(SERVER)/$(DIR)/$(FW_DIR)/bl31-$(PLAT).bin -O bl31.bin
 	@$(WGET) -q $(SERVER)/$(DIR)/$(FW_DIR)/u-boot-spl.bin-$(PLAT)evk-sd -O u-boot-spl.bin
 	@$(WGET) -q $(SERVER)/$(DIR)/$(FW_DIR)/u-boot-nodtb.bin-$(PLAT)evk-sd -O u-boot-nodtb.bin
-	@$(WGET) -q $(SERVER)/$(DIR)/$(FW_DIR)/fsl-$(PLAT)-evk.dtb -O fsl-$(PLAT)-evk.dtb
+	@$(WGET) -q $(SERVER)/$(DIR)/$(FW_DIR)/seco-$(PLAT)-61.dtb -O seco-$(PLAT)-61.dtb
 	@$(WGET) -q $(SERVER)/$(DIR)/$(FW_DIR)/signed_hdmi_imx8m.bin -O signed_hdmi_imx8m.bin
 	@$(WGET) -q $(SERVER)/$(DIR)/$(FW_DIR)/signed_dp_imx8m.bin -O signed_dp_imx8m.bin
 	@$(WGET) -q $(SERVER)/$(DIR)/$(FW_DIR)/mkimage_uboot -O mkimage_uboot
